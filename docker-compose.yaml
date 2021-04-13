@@ -1,0 +1,6 @@
+version: '3'
+
+service:
+  web-tester:
+    build: .
+    ports: "8080/80"

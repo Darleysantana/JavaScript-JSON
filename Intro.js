@@ -1,3 +1,4 @@
+//Variaveis Utilizadas
 var Numero_inteiro;
 var apresentar;
 var resto;
@@ -5,11 +6,21 @@ var dezena_inteira;
 var centena_inteira;
 var mil_inteiro;
 var dmil_inteiro;
-var requestURL = 'extenso.json';
-var request = new XMLHttpRequest();
-
-request.open('GET', requestURL);
+//Forma de adquirir contéudo do formulário
 Numero_inteiro = window.document.getElementById('numerointeiro');
+//Método encontrado na internet que encontrei para fazer GET no JSON
+$.getJSON( "valor.json", function( extenso ){
+    Numero_inteiro = [];
+    $.each(extenso, function(key, val)){
+        Numero_inteiro.push("<p id='" + key + "'>" + val + "</p>");
+    });
+    $( "<nav/>", {
+        "class": "result",
+        html: Numero_inteiro.join("")
+    }).appendTo("header");
+});
+
+//Parte Lógica para fazer com que os números sejam designados para cada parte: Unidade, Dezena e centena
 function transcrever(){
     if(Numero_inteiro <= 19)
     {
@@ -81,6 +92,9 @@ function transcrever(){
 
         apresentar = (dezenas[dmil_inteiro]+ "e" +U_ecasadodez[mil_inteiro]+ "Mil e" +centena[centena_inteira]+ "e" + dezenas[dezena_inteira]+ "e" +U_ecasadodez[resto]);
     }
+    /*Parte Lógica para fazer com que os números sejam designados para cada parte: Unidade, Dezena e centena
+    com conversão de negativo para positivo.
+    */
     if(Numero_inteiro >= -99999){
         Numero_inteiro = Numero_inteiro * (-1);
         for(resto >= 11 || resto <= 19){
@@ -154,7 +168,4 @@ function transcrever(){
         Numero_inteiro = Numero_inteiro * (-1);
         apresentar = ("menos " + U_ecasadodez[Numero_inteiro]);
     }
-}
-function alerta(){
-  window.document.getElementById("resultado").innerHTML = apresentar;
 }
